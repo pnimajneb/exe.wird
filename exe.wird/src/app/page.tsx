@@ -1,7 +1,9 @@
+import { Textarea } from "@/components/ui/textarea";
+
 export default function Home() {
   return (
     <main>
-      <h1 className="text-3xl">Test</h1>
+      <Textarea />
     </main>
   );
 }
