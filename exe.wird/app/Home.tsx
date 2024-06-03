@@ -7,7 +7,6 @@ import {
   Type,
   Upload,
   WrapText,
-  Grid2x2Check,
 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import {
@@ -17,37 +16,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
-
 import { Textarea } from "../components/ui/textarea";
 
 export default function Home() {
   return (
     <main>
-      <div className="w-3/4 flex m-12 gap-4">
+      <div className="w-1/2 h-full flex m-12">
         <div className="flex flex-col gap-12">
-          <Button
-            className="flex flex-col gap-2"
-            variant={"secondary"}
-            size={"icon"}
-          >
+          <Button>
             <Upload />
-            <span className="text-[16px]">Upload</span>
           </Button>
-          <Button
-            className="flex flex-col gap-2"
-            variant={"secondary"}
-            size={"icon"}
-          >
+          <Button>
             <Type />
-            <span className="text-[16px]">Text</span>
           </Button>
-          <Button
-            className="flex flex-col gap-2"
-            variant={"secondary"}
-            size={"icon"}
-          >
-            <Grid2x2Check />
-            <span className="text-[16px]">Pixel Tool</span>
+          <Button>
+            <Grid2X2Check />
           </Button>
         </div>
         <div className="border-neutral-600 border-2 rounded-[2px] flex flex-col gap-4 p-12">
