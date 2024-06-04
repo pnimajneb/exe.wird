@@ -1,98 +1,59 @@
+import React from "react";
 import {
   AlignCenter,
   AlignJustify,
   AlignLeft,
   AlignRight,
-  Circle,
   Type,
   Upload,
   WrapText,
   Grid2x2Check,
 } from "lucide-react";
-import { Button } from "../components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../components/ui/select";
-
+import ActionButton from "../components/ActionButton";
+import CustomSelect from "../components/CustomSelect";
 import { Textarea } from "../components/ui/textarea";
+import { Button } from "../components/ui/button";
 
 export default function Home() {
+  const buttonsConfig = [
+    { icon: Upload, label: "Upload" },
+    { icon: Type, label: "Text" },
+    { icon: Grid2x2Check, label: "Pixel Tool" },
+  ];
+
+  const fontOptions = [
+    { value: "test1", label: "Test1" },
+    { value: "test2", label: "Test2" },
+    { value: "test3", label: "Test3" },
+  ];
+
+  const colorOptions = [
+    { value: "white", label: "Weiß", icon: { textcolor: "neutral-200" } },
+    {
+      value: "yellow",
+      label: "Gelb",
+      icon: { textcolor: "yellow-300", fillcolor: "yellow-400" },
+    },
+    {
+      value: "purple",
+      label: "Violett",
+      icon: { textcolor: "purple-300", fillcolor: "purple-400" },
+    },
+    { value: "black", label: "Schwarz", icon: { textcolor: "black" } },
+  ];
+
   return (
     <main>
-      <div className="w-3/4 flex m-12 gap-4">
+      <div className="flex m-12 gap-4">
         <div className="flex flex-col gap-12">
-          <Button
-            className="flex flex-col gap-2"
-            variant={"secondary"}
-            size={"icon"}
-          >
-            <Upload />
-            <span className="text-[16px]">Upload</span>
-          </Button>
-          <Button
-            className="flex flex-col gap-2"
-            variant={"secondary"}
-            size={"icon"}
-          >
-            <Type />
-            <span className="text-[16px]">Text</span>
-          </Button>
-          <Button
-            className="flex flex-col gap-2"
-            variant={"secondary"}
-            size={"icon"}
-          >
-            <Grid2x2Check />
-            <span className="text-[16px]">Pixel Tool</span>
-          </Button>
+          {buttonsConfig.map((button, index) => (
+            <ActionButton key={index} icon={button.icon} label={button.label} />
+          ))}
         </div>
         <div className="border-neutral-600 border-2 rounded-[2px] flex flex-col gap-4 p-12">
           <Textarea className="p-4" />
-          <Select>
-            <SelectTrigger className="w-1/2">
-              <SelectValue placeholder="Schriftart" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="test1">Test1</SelectItem>
-              <SelectItem value="test2">Test2</SelectItem>
-              <SelectItem value="test3">Test3</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger className="w-1/2">
-              <SelectValue placeholder="Farbe" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="white">
-                <div className="flex items-center gap-2">
-                  <Circle className="text-neutral-200 fill-white" />
-                  Weiß
-                </div>
-              </SelectItem>
-              <SelectItem value="yellow">
-                <div className="flex items-center gap-2">
-                  <Circle className="text-yellow-300 fill-yellow-400" />
-                  Gelb
-                </div>
-              </SelectItem>
-              <SelectItem value="purple">
-                <div className="flex items-center gap-2">
-                  <Circle className="text-purple-300 fill-purple-400" />
-                  Violett
-                </div>
-              </SelectItem>
-              <SelectItem value="black">
-                <div className="flex items-center gap-2">
-                  <Circle className="text-black fill-black" />
-                  Schwarz
-                </div>
-              </SelectItem>
-            </SelectContent>
-          </Select>
+          <CustomSelect placeholder="Schriftart" options={fontOptions} />
+          <CustomSelect placeholder="Farbe" options={colorOptions} />
           <div>
             <p className="pb-2 pt-4">Textausrichtung</p>
             <Button variant={"outline"} className="mr-2">
