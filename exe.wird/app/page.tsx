@@ -14,17 +14,35 @@ import CustomSelect from "../components/CustomSelect";
 import { Textarea } from "../components/ui/textarea";
 import { Button } from "../components/ui/button";
 
-export default function Home() {
+export async function getFonts() {
+  const GOOGLE_FONTS_API_KEY = process.env.GOOGLE_FONTS_API_KEY;
+  let fontOptions = [];
+
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/webfonts/v1/webfonts?key=${GOOGLE_FONTS_API_KEY}`
+    );
+    const data = await response.json();
+    fontOptions = data.itmes.map((font) => ({
+      value: font.family,
+      label: font.family,
+    }));
+  } catch (error) {
+    console.error("Error fetching fonts:", error);
+  }
+
+  return {
+    props: {
+      fontOptions,
+    },
+  };
+}
+
+export default function Home({ fontOptions }) {
   const buttonsConfig = [
     { icon: Upload, label: "Upload" },
     { icon: Type, label: "Text" },
     { icon: Grid2x2Check, label: "Pixel Tool" },
-  ];
-
-  const fontOptions = [
-    { value: "test1", label: "Test1" },
-    { value: "test2", label: "Test2" },
-    { value: "test3", label: "Test3" },
   ];
 
   const colorOptions = [
@@ -39,7 +57,11 @@ export default function Home() {
       label: "Violett",
       icon: { textcolor: "purple-300", fillcolor: "purple-400" },
     },
-    { value: "black", label: "Schwarz", icon: { textcolor: "black" } },
+    {
+      value: "black",
+      label: "Schwarz",
+      icon: { textcolor: "black", fillcolor: "black" },
+    },
   ];
 
   return (
@@ -50,7 +72,7 @@ export default function Home() {
             <ActionButton key={index} icon={button.icon} label={button.label} />
           ))}
         </div>
-        <div className="border-neutral-600 border-2 rounded-[2px] flex flex-col gap-4 p-12">
+        <div className="border-neutral-600 border-2 rounded-[2px] flex flex-col gap-4 p-12 w-1/3">
           <Textarea className="p-4" />
           <CustomSelect placeholder="Schriftart" options={fontOptions} />
           <CustomSelect placeholder="Farbe" options={colorOptions} />
