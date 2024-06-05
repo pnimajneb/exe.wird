@@ -13,41 +13,18 @@ import ActionButton from "../components/ActionButton";
 import CustomSelect from "../components/CustomSelect";
 import { Textarea } from "../components/ui/textarea";
 import { Button } from "../components/ui/button";
+import { text } from "stream/consumers";
 
 type Font = {
   family: string;
 };
 
-type FontOption = {
+export type FontOption = {
   value: string;
   label: string;
 };
 
-// export async function getFonts() {
-//   const GOOGLE_FONTS_API_KEY = process.env.GOOGLE_FONTS_API_KEY;
-//   let fontOptions: FontOption[] = [];
-
-//   try {
-//     const response = await fetch(
-//       `https://www.googleapis.com/webfonts/v1/webfonts?key=${GOOGLE_FONTS_API_KEY}`
-//     );
-//     const data = await response.json();
-//     fontOptions = data.items.map((font: Font) => ({
-//       value: font.family,
-//       label: font.family,
-//     }));
-//   } catch (error) {
-//     console.error("Error fetching fonts:", error);
-//   }
-
-//   return {
-//     props: {
-//       fontOptions,
-//     },
-//   };
-// }
-
-async function getFonts(): Promise<FontOption[]> {
+export async function getFonts(): Promise<FontOption[]> {
   const GOOGLE_FONTS_API_KEY = process.env.GOOGLE_FONTS_API_KEY;
   let fontOptions: FontOption[] = [];
 
@@ -71,7 +48,7 @@ async function getFonts(): Promise<FontOption[]> {
   return fontOptions;
 }
 
-type HomeProps = {
+export type HomeProps = {
   fontOptions: FontOption[];
 };
 
@@ -136,6 +113,10 @@ export default async function Home() {
               <WrapText />
             </Button>
           </div>
+        </div>
+        <div className="border-neutral-600 border-2 rounded-[2px] flex flex-col gap-4 p-12 w-1/3">
+          <p>Typed Text:</p>
+          <p>{}</p>
         </div>
       </div>
     </main>
