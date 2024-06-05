@@ -14,16 +14,53 @@ import CustomSelect from "../components/CustomSelect";
 import { Textarea } from "../components/ui/textarea";
 import { Button } from "../components/ui/button";
 
-export async function getFonts() {
+type Font = {
+  family: string;
+};
+
+type FontOption = {
+  value: string;
+  label: string;
+};
+
+// export async function getFonts() {
+//   const GOOGLE_FONTS_API_KEY = process.env.GOOGLE_FONTS_API_KEY;
+//   let fontOptions: FontOption[] = [];
+
+//   try {
+//     const response = await fetch(
+//       `https://www.googleapis.com/webfonts/v1/webfonts?key=${GOOGLE_FONTS_API_KEY}`
+//     );
+//     const data = await response.json();
+//     fontOptions = data.items.map((font: Font) => ({
+//       value: font.family,
+//       label: font.family,
+//     }));
+//   } catch (error) {
+//     console.error("Error fetching fonts:", error);
+//   }
+
+//   return {
+//     props: {
+//       fontOptions,
+//     },
+//   };
+// }
+
+async function getFonts(): Promise<FontOption[]> {
   const GOOGLE_FONTS_API_KEY = process.env.GOOGLE_FONTS_API_KEY;
-  let fontOptions = [];
+  let fontOptions: FontOption[] = [];
 
   try {
     const response = await fetch(
       `https://www.googleapis.com/webfonts/v1/webfonts?key=${GOOGLE_FONTS_API_KEY}`
     );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
     const data = await response.json();
-    fontOptions = data.itmes.map((font) => ({
+    fontOptions = data.items.map((font: Font) => ({
       value: font.family,
       label: font.family,
     }));
@@ -31,14 +68,16 @@ export async function getFonts() {
     console.error("Error fetching fonts:", error);
   }
 
-  return {
-    props: {
-      fontOptions,
-    },
-  };
+  return fontOptions;
 }
 
-export default function Home({ fontOptions }) {
+type HomeProps = {
+  fontOptions: FontOption[];
+};
+
+export default async function Home() {
+  const fontOptions = await getFonts();
+
   const buttonsConfig = [
     { icon: Upload, label: "Upload" },
     { icon: Type, label: "Text" },

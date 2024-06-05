@@ -17,15 +17,17 @@ type Option = {
   };
 };
 
-type CustomSelectProps = {
+export type CustomSelectProps = {
   placeholder: string;
   options: Option[];
 };
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
   placeholder,
-  options,
+  options = [],
 }) => {
+  console.log("Options:", options);
+
   return (
     <Select>
       <SelectTrigger className="w-1/2">
