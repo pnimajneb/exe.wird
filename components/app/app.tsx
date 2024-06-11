@@ -5,14 +5,38 @@ import { DesignerComponent } from "../designer/designer";
 type AppProps = {};
 
 export const AppComponent: React.FC = (props: AppProps) => {
+  const isDesktop = window.innerWidth > BP_TABLET_DESKTOP;
+  const isTablet =
+    window.innerWidth > BP_MOBILE_TABLET &&
+    window.innerWidth <= BP_TABLET_DESKTOP;
+  const isMobile = window.innerWidth <= BP_MOBILE_TABLET;
+
   function changeColor() {}
 
   function sendPicture() {}
 
-  return (
-    <div>
-      <EditorComponent />
-      <DesignerComponent />
-    </div>
-  );
+  if (isDesktop) {
+    return (
+      <div>
+        <EditorComponent />
+        <DesignerComponent />
+      </div>
+    );
+  }
+
+  if (isTablet) {
+    return (
+      <div>
+        <EditorComponent />
+        <DesignerComponent />
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <EditorComponent />
+        <DesignerComponent />
+      </div>
+    );
+  }
 };
