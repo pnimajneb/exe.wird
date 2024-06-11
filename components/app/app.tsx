@@ -5,38 +5,20 @@ import { DesignerComponent } from "../designer/designer";
 type AppProps = {};
 
 export const AppComponent: React.FC = (props: AppProps) => {
-  const isDesktop = window.innerWidth > BP_TABLET_DESKTOP;
-  const isTablet =
-    window.innerWidth > BP_MOBILE_TABLET &&
-    window.innerWidth <= BP_TABLET_DESKTOP;
-  const isMobile = window.innerWidth <= BP_MOBILE_TABLET;
+  // const isDesktop = window.innerWidth > BP_TABLET_DESKTOP;
+  // const isTablet =
+  //   window.innerWidth > BP_MOBILE_TABLET &&
+  //   window.innerWidth <= BP_TABLET_DESKTOP;
+  // const isMobile = window.innerWidth <= BP_MOBILE_TABLET;
 
   function changeColor() {}
 
   function sendPicture() {}
 
-  if (isDesktop) {
-    return (
-      <div>
-        <EditorComponent />
-        <DesignerComponent />
-      </div>
-    );
-  }
-
-  if (isTablet) {
-    return (
-      <div>
-        <EditorComponent />
-        <DesignerComponent />
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <EditorComponent />
-        <DesignerComponent />
-      </div>
-    );
-  }
+  return (
+    <div className="flex m-12 gap-4">
+      <EditorComponent />
+      <DesignerComponent />
+    </div>
+  );
 };
