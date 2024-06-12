@@ -4,37 +4,42 @@ import React from "react";
 import { PixelModuleComponent } from "./modules/pixelModule";
 import { TextModuleComponent } from "./modules/textModule";
 import { MidjourneyModuleComponent } from "./modules/midjourneyModule";
+import { Grid2x2Check, Type, Upload } from "lucide-react";
+import ActionButton from "../ActionButton";
 
 type EditorProps = {};
 
-enum EditorMode {
-  PIXEL,
-  TEXT,
-  MIDJOURNEY,
-}
+const buttonsConfig = [
+  { icon: Upload, label: "Upload" },
+  { icon: Type, label: "Text" },
+  { icon: Grid2x2Check, label: "Pixel Tool" },
+];
 
 export const EditorComponent: React.FC = (props: EditorProps) => {
-  const [mode, setMode] = React.useState(EditorMode.TEXT);
+  const [mode, setMode] = React.useState("Text");
 
   function renderEditor() {
     switch (mode) {
-      case EditorMode.PIXEL:
+      case "Pixel Tool":
         return <PixelModuleComponent />;
-      case EditorMode.TEXT:
+      case "Text":
         return <TextModuleComponent />;
-      case EditorMode.MIDJOURNEY:
+      case "Upload":
         return <MidjourneyModuleComponent />;
     }
   }
 
   return (
-    <div>
-      <div>
-        <button onClick={() => setMode(EditorMode.TEXT)}>Text</button>
-        <button onClick={() => setMode(EditorMode.PIXEL)}>Pixel</button>
-        <button onClick={() => setMode(EditorMode.MIDJOURNEY)}>
-          Midjourney
-        </button>
+    <div className="grid grid-cols-[100px_minmax(100px,1fr)]">
+      <div className="flex flex-col gap-12">
+        {buttonsConfig.map((button, index) => (
+          <ActionButton
+            key={index}
+            icon={button.icon}
+            label={button.label}
+            onClick={() => setMode(button.label)}
+          />
+        ))}
       </div>
       {renderEditor()}
     </div>
