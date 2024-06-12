@@ -12,7 +12,7 @@ import {
 import { Font, FontOption } from "../../../types/fonts";
 
 export async function getFonts(): Promise<FontOption[]> {
-  const GOOGLE_FONTS_API_KEY = "AIzaSyCggySCv6HONkQCWB0bSgMHWcVY7A8JOss";
+  const GOOGLE_FONTS_API_KEY = process.env.GOOGLE_FONTS_API_KEY;
   let fontOptions: FontOption[] = [];
 
   try {
