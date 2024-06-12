@@ -16,7 +16,7 @@ export const AppComponent: React.FC = (props: AppProps) => {
   function sendPicture() {}
 
   return (
-    <div className="flex m-12 gap-4">
+    <div className=" grid lg:grid-cols-2 md:grid-cols-1 gap-12 p-12">
       <EditorComponent />
       <DesignerComponent />
     </div>

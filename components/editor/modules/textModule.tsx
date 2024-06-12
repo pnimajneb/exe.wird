@@ -58,33 +58,31 @@ export const TextModuleComponent: React.FC = async () => {
   ];
 
   return (
-    <>
-      <div className="border-neutral-600 border-2 rounded-[2px] flex flex-col gap-4 p-12">
-        <Textarea className="p-4" />
-        <CustomSelect placeholder="Schriftart" options={fontOptions} />
-        <CustomSelect placeholder="Farbe" options={colorOptions} />
-        <div>
-          <p className="pb-2 pt-4">Textausrichtung</p>
-          <Button variant={"outline"} className="mr-2">
-            <AlignLeft />
-          </Button>
-          <Button variant={"outline"} className="mr-2">
-            <AlignRight />
-          </Button>
-          <Button variant={"outline"} className="mr-2">
-            <AlignCenter />
-          </Button>
-          <Button variant={"outline"} className="mr-2">
-            <AlignJustify />
-          </Button>
-        </div>
-        <div>
-          <p className="pb-2 pt-4">Zeilen- & Zeichenabstand</p>
-          <Button variant={"outline"}>
-            <WrapText />
-          </Button>
-        </div>
+    <div className="min-w- border-neutral-600 border-2 rounded-[2px] flex flex-col gap-4 p-6">
+      <Textarea className="p-4" />
+      <CustomSelect placeholder="Schriftart" options={fontOptions} />
+      <CustomSelect placeholder="Farbe" options={colorOptions} />
+      <div>
+        <p className="pb-2 pt-4">Textausrichtung</p>
+        <Button variant={"outline"} className="mr-2">
+          <AlignLeft />
+        </Button>
+        <Button variant={"outline"} className="mr-2">
+          <AlignRight />
+        </Button>
+        <Button variant={"outline"} className="mr-2">
+          <AlignCenter />
+        </Button>
+        <Button variant={"outline"} className="mr-2">
+          <AlignJustify />
+        </Button>
       </div>
-    </>
+      <div>
+        <p className="pb-2 pt-4">Zeilen- & Zeichenabstand</p>
+        <Button variant={"outline"}>
+          <WrapText />
+        </Button>
+      </div>
+    </div>
   );
 };

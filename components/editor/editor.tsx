@@ -30,7 +30,7 @@ export const EditorComponent: React.FC = (props: EditorProps) => {
   }
 
   return (
-    <div>
+    <div className="grid grid-cols-[100px_minmax(100px,1fr)]">
       <div className="flex flex-col gap-12">
         {buttonsConfig.map((button, index) => (
           <ActionButton
