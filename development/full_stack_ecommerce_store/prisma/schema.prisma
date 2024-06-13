@@ -21,7 +21,7 @@ model Product {
   isAvailableForPurchase Boolean  @default(true)
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
-  oders                  Order[]
+  oder                   Order[]
 }
 
 model User {
