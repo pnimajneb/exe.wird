@@ -1,0 +1,2 @@
+const BP_TABLET_DESKTOP = 1024;
+const BP_MOBILE_TABLET = 768;
