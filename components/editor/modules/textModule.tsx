@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Textarea } from "../../ui/textarea";
 import CustomSelect from "../../CustomSelect";
@@ -10,20 +12,27 @@ import {
   WrapText,
 } from "lucide-react";
 import { Font, FontOption } from "../../../types/fonts";
+import { googleFonts } from "../../../public/fonts/googleFonts";
 
-export async function getFonts(): Promise<FontOption[]> {
-  const GOOGLE_FONTS_API_KEY = "AIzaSyCggySCv6HONkQCWB0bSgMHWcVY7A8JOss";
+interface TextModuleProps {
+  sendPicture: (img: string) => void;
+  bgColor: string;
+}
+
+export function getFonts(): FontOption[] {
+  // const GOOGLE_FONTS_API_KEY = "AIzaSyCggySCv6HONkQCWB0bSgMHWcVY7A8JOss";
   let fontOptions: FontOption[] = [];
 
   try {
-    const response = await fetch(
-      `https://www.googleapis.com/webfonts/v1/webfonts?key=${GOOGLE_FONTS_API_KEY}`
-    );
+    // const response = await fetch(
+    //   `https://www.googleapis.com/webfonts/v1/webfonts?key=${GOOGLE_FONTS_API_KEY}`
+    // );
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    const data = await response.json();
+    // if (!response.ok) {
+    //   throw new Error("Failed to fetch data");
+    // }
+    // const data = await response.json();
+    const data = googleFonts;
     fontOptions = data.items.map((font: Font) => ({
       value: font.family,
       label: font.family,
@@ -35,8 +44,11 @@ export async function getFonts(): Promise<FontOption[]> {
   return fontOptions;
 }
 
-export const TextModuleComponent: React.FC = async () => {
-  const fontOptions = await getFonts();
+export const TextModuleComponent: React.FC<TextModuleProps> = (
+  props: TextModuleProps
+) => {
+  const { sendPicture, bgColor } = props;
+  const fontOptions = getFonts();
 
   const colorOptions = [
     { value: "white", label: "Weiß", icon: { textcolor: "neutral-200" } },

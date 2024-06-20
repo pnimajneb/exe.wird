@@ -7,25 +7,45 @@ import { MidjourneyModuleComponent } from "./modules/midjourneyModule";
 import { Grid2x2Check, Type, Upload } from "lucide-react";
 import ActionButton from "../ActionButton";
 
-type EditorProps = {};
+interface EditorProps {
+  sendPicture: (img:string) => void;
+  bgColor: string;
+}
+
+
+enum EditorMode {
+  PIXEL = "Pixel Tool",
+  TEXT = "Text",
+  MIDJOURNEY = "Upload",
+}
 
 const buttonsConfig = [
-  { icon: Upload, label: "Upload" },
-  { icon: Type, label: "Text" },
-  { icon: Grid2x2Check, label: "Pixel Tool" },
+  { icon: Upload, label: EditorMode.MIDJOURNEY },
+  { icon: Type, label: EditorMode.TEXT },
+  { icon: Grid2x2Check, label: EditorMode.PIXEL },
 ];
 
-export const EditorComponent: React.FC = (props: EditorProps) => {
-  const [mode, setMode] = React.useState("Text");
+export const EditorComponent: React.FC<EditorProps> = (props: EditorProps) => {
+  const { sendPicture, bgColor } = props;
+  const [mode, setMode] = React.useState(EditorMode.MIDJOURNEY);
 
   function renderEditor() {
     switch (mode) {
-      case "Pixel Tool":
-        return <PixelModuleComponent />;
-      case "Text":
-        return <TextModuleComponent />;
-      case "Upload":
-        return <MidjourneyModuleComponent />;
+      case EditorMode.PIXEL:
+        return (
+          <PixelModuleComponent sendPicture={sendPicture} bgColor={bgColor} />
+        );
+      case EditorMode.TEXT:
+        return (
+          <TextModuleComponent sendPicture={sendPicture} bgColor={bgColor} />
+        );
+      case EditorMode.MIDJOURNEY:
+        return (
+          <MidjourneyModuleComponent
+            sendPicture={sendPicture}
+            bgColor={bgColor}
+          />
+        );
     }
   }
 
