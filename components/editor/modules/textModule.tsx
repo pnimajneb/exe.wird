@@ -11,8 +11,8 @@ import {
   AlignRight,
   WrapText,
 } from "lucide-react";
-import { Font, FontOption } from "../../../types/fonts";
 import { googleFontsSmaller } from "../../../public/fonts/googleFontsSmaller";
+import { FontOption } from "../../../app/page";
 
 interface TextModuleProps {
   sendPicture: (img: string) => void;
