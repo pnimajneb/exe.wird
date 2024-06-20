@@ -22,8 +22,8 @@ export const AppComponent: React.FC<AppProps> = () => {
   const backCanvas = useRef<any>(null);
 
   useEffect(() => {
-    frontCanvas.current = frontCanvasInit(3800, 3800);
-    backCanvas.current = backCanvasInit(3800, 3800);
+    frontCanvas.current = frontCanvasInit(800, 800);
+    backCanvas.current = backCanvasInit(800, 800);
 
     setViewedResolution(frontCanvas.current, 400, 400);
     setViewedResolution(backCanvas.current, 400, 400);

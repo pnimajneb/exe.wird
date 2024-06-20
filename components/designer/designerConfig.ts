@@ -2,9 +2,19 @@ import { fabric } from "fabric";
 
 export function frontCanvasInit(width: number, height: number) {
   return new fabric.Canvas("frontCanvas", {
-    height: 800,
-    width: 800,
+    height: height,
+    width: width,
     backgroundColor: "pink",
+    selection: false,
+    renderOnAddRemove: true,
+  });
+}
+
+export function backCanvasInit(width: number, height: number) {
+  return new fabric.Canvas("backCanvas", {
+    height: height,
+    width: width,
+    backgroundColor: "red",
     selection: false,
     renderOnAddRemove: true,
   });
@@ -24,14 +34,4 @@ export function setViewedResolution(
       cssOnly: true,
     }
   );
-}
-
-export function backCanvasInit(width: number, height: number) {
-  return new fabric.Canvas("backCanvas", {
-    height: 800,
-    width: 800,
-    backgroundColor: "red",
-    selection: false,
-    renderOnAddRemove: true,
-  });
 }
