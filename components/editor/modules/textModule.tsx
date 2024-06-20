@@ -12,7 +12,7 @@ import {
   WrapText,
 } from "lucide-react";
 import { Font, FontOption } from "../../../types/fonts";
-import { googleFonts } from "../../../public/fonts/googleFonts";
+import { googleFontsSmaller } from "../../../public/fonts/googleFontsSmaller";
 
 interface TextModuleProps {
   sendPicture: (img: string) => void;
@@ -32,7 +32,7 @@ export function getFonts(): FontOption[] {
     //   throw new Error("Failed to fetch data");
     // }
     // const data = await response.json();
-    const data = googleFonts;
+    const data = googleFontsSmaller;
     fontOptions = data.items.map((font: Font) => ({
       value: font.family,
       label: font.family,

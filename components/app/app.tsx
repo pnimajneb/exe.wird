@@ -5,12 +5,16 @@ import { EditorComponent } from "../editor/editor";
 import { fabric } from "fabric";
 
 import { DesignerComponent } from "../designer/designer";
-import { backCanvasInit, frontCanvasInit } from "../designer/designerConfig";
+import {
+  backCanvasInit,
+  frontCanvasInit,
+  setViewedResolution,
+} from "../designer/designerConfig";
 
 type AppProps = {};
 
 export const AppComponent: React.FC<AppProps> = () => {
-  const [bgColor, setBgColor] = useState("#ffffff");
+  const [bgColor, setBgColor] = useState("#ff2222");
 
   const [showFrontDesigner, setShowFrontDesigner] = useState(true);
 
@@ -18,8 +22,11 @@ export const AppComponent: React.FC<AppProps> = () => {
   const backCanvas = useRef<any>(null);
 
   useEffect(() => {
-    frontCanvas.current = frontCanvasInit();
-    backCanvas.current = backCanvasInit();
+    frontCanvas.current = frontCanvasInit(3800, 3800);
+    backCanvas.current = backCanvasInit(3800, 3800);
+
+    setViewedResolution(frontCanvas.current, 400, 400);
+    setViewedResolution(backCanvas.current, 400, 400);
 
     if (!frontCanvas.current || !backCanvas.current) {
       console.error("min 1 canvas not initialized");
@@ -43,17 +50,23 @@ export const AppComponent: React.FC<AppProps> = () => {
   }
 
   function sendPicture(img: string) {
-    if (showFrontDesigner) {
-      // frontDesigner?.addImage(img);
-      frontCanvas.current.add(
-        new fabric.Circle({ radius: 30, fill: "red", top: 100, left: 100 })
-      );
-    } else {
-      // backDesigner?.addImage(img);
-      backCanvas.current.add(
-        new fabric.Circle({ radius: 30, fill: "blue", top: 100, left: 100 })
-      );
-    }
+    const image = new Image();
+    image.onload = function () {
+      const fabricImage = new fabric.Image(image, {
+        left: 100,
+        top: 100,
+        angle: 0,
+        scaleX: 0.5,
+        scaleY: 0.5,
+      });
+
+      if (showFrontDesigner) {
+        frontCanvas.current.add(fabricImage);
+      } else {
+        backCanvas.current.add(fabricImage);
+      }
+    };
+    image.src = img;
   }
 
   return (

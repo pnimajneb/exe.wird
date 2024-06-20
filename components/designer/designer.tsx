@@ -1,4 +1,3 @@
-import { FabricJSCanvas } from "fabricjs-react";
 import React, { useEffect, useState } from "react";
 
 interface DesignerProps {
@@ -64,7 +63,6 @@ export const DesignerComponent: React.FC<DesignerProps> = (
 
   return (
     <div className="border-neutral-600 border-2 rounded-[2px]">
-      <button onClick={toggleDesigner}>Toggle side</button>
       <div>
         <div style={{ display: showFrontDesigner ? "flex" : "none" }}>
           <canvas ref={frontCanvas} id="frontCanvas" />
@@ -73,6 +71,7 @@ export const DesignerComponent: React.FC<DesignerProps> = (
           <canvas ref={backCanvas} id="backCanvas" />
         </div>
       </div>
+      <button onClick={toggleDesigner}>switch</button>
     </div>
   );
 };

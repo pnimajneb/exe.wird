@@ -3,15 +3,14 @@
 import React from "react";
 import { PixelModuleComponent } from "./modules/pixelModule";
 import { TextModuleComponent } from "./modules/textModule";
-import { MidjourneyModuleComponent } from "./modules/midjourneyModule";
+import { UploadModuleComponent } from "./modules/uploadModule";
 import { Grid2x2Check, Type, Upload } from "lucide-react";
 import ActionButton from "../ActionButton";
 
 interface EditorProps {
-  sendPicture: (img:string) => void;
+  sendPicture: (img: string) => void;
   bgColor: string;
 }
-
 
 enum EditorMode {
   PIXEL = "Pixel Tool",
@@ -41,10 +40,7 @@ export const EditorComponent: React.FC<EditorProps> = (props: EditorProps) => {
         );
       case EditorMode.MIDJOURNEY:
         return (
-          <MidjourneyModuleComponent
-            sendPicture={sendPicture}
-            bgColor={bgColor}
-          />
+          <UploadModuleComponent sendPicture={sendPicture} bgColor={bgColor} />
         );
     }
   }
