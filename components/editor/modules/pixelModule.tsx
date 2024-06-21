@@ -10,6 +10,11 @@ interface PixelModuleProps {
   bgColor: string;
 }
 
+export interface ColorIndex {
+  color: string;
+  index: number;
+}
+
 const eCanvasWidth = 400;
 const eCanvasHeight = 400;
 const scale = 4;
@@ -24,10 +29,14 @@ export const PixelModuleComponent: React.FC<PixelModuleProps> = (
   const [index, setIndex] = React.useState(0);
   const [seed, setSeed] = React.useState<number>();
   const [overlayOpacity, setOverlayOpacity] = React.useState<number>(0);
+  const [usedColors, setUsedColors] = React.useState<ColorIndex[]>([]);
 
   useEffect(() => {
     if (eCanvas.current && !pixelMandala.current) {
       pixelMandala.current = new PixelMandala(eCanvas.current);
+      setIndex(pixelMandala.current?.getIndex() || 0);
+      setSeed(pixelMandala.current?.getSeed() || 0);
+      setUsedColors(pixelMandala.current?.getUsedColors() || []);
       console.log("PixelMandala initialized");
     } else {
       console.warn(
@@ -40,26 +49,31 @@ export const PixelModuleComponent: React.FC<PixelModuleProps> = (
     pixelMandala.current?.initiate();
     setIndex(pixelMandala.current?.getIndex() || 0);
     setSeed(pixelMandala.current?.getSeed() || 0);
+    setUsedColors(pixelMandala.current?.getUsedColors() || []);
   }
 
   function startWithNewRules() {
     pixelMandala.current?.startWithNewRules();
     setIndex(pixelMandala.current?.getIndex() || 0);
     setSeed(pixelMandala.current?.getSeed() || 0);
+    setUsedColors(pixelMandala.current?.getUsedColors() || []);
   }
 
   function back() {
     pixelMandala.current?.back();
     setIndex(pixelMandala.current?.getIndex() || 0);
+    setUsedColors(pixelMandala.current?.getUsedColors() || []);
   }
 
   function doStep() {
     pixelMandala.current?.step();
     setIndex(pixelMandala.current?.getIndex() || 0);
+    setUsedColors(pixelMandala.current?.getUsedColors() || []);
   }
 
   function randomColorAndRender() {
     pixelMandala.current?.randomColorAndRender();
+    setUsedColors(pixelMandala.current?.getUsedColors() || []);
   }
 
   function createImage() {
@@ -74,8 +88,24 @@ export const PixelModuleComponent: React.FC<PixelModuleProps> = (
         start
       </button>
       {/* textfield seed */}
-      <input type="text" id="seed" placeholder="seed" />
-      {seed}
+      <input
+        type="text"
+        id="seed"
+        placeholder="seed"
+        value={seed}
+        onChange={(event) => {
+          const value = parseInt(event.target.value);
+          if (!isNaN(value)) {
+            setSeed(value);
+          }
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            pixelMandala.current?.changeSeed(seed ?? 0);
+            doStep();
+          }
+        }}
+      />
       <div
         style={{
           position: "relative",
@@ -138,6 +168,24 @@ export const PixelModuleComponent: React.FC<PixelModuleProps> = (
         random color
       </button>
       {/* TODO:add colors */}
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        {usedColors.map((color) => (
+          <input
+            type="color"
+            key={color.color}
+            value={color.color}
+            onChange={(event) => {
+              pixelMandala.current?.setColor(color.index, event.target.value);
+              setUsedColors(pixelMandala.current?.getUsedColors() || []);
+            }}
+            style={{
+              width: "20px",
+              height: "20px",
+              margin: "5px", // Optional: add some space between the items
+            }}
+          ></input>
+        ))}
+      </div>
     </div>
   );
 };

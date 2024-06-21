@@ -22,6 +22,14 @@ export const DesignerComponent: React.FC<DesignerProps> = (
   const [frontDesignerState, setFrontDesignerState] = useState(null);
   const [backDesignerState, setBackDesignerState] = useState(null);
 
+  const [colors, setColors] = useState([
+    "#000000",
+    "#ff33ff",
+    "#ff0000",
+    "#00ff00",
+    "#0000ff",
+  ]);
+
   const saveCurrentCanvasState = () => {
     if (showFrontDesigner && frontCanvas.current) {
       setFrontDesignerState(frontCanvas.current.toJSON());
@@ -70,6 +78,20 @@ export const DesignerComponent: React.FC<DesignerProps> = (
         <div style={{ display: showFrontDesigner ? "none" : "flex" }}>
           <canvas ref={backCanvas} id="backCanvas" />
         </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        {colors.map((color) => (
+          <span
+            key={color}
+            style={{
+              backgroundColor: color,
+              width: "20px",
+              height: "20px",
+              margin: "5px", // Optional: add some space between the items
+            }}
+            onClick={() => changeColor(color)}
+          ></span>
+        ))}
       </div>
       <button onClick={toggleDesigner}>switch</button>
     </div>
