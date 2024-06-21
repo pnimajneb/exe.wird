@@ -1,4 +1,5 @@
 import { fabric } from "fabric";
+import { ColorIndex } from "../../components/editor/modules/pixelModule";
 
 //params for generator
 const isOneOne = true;
@@ -47,7 +48,7 @@ export class PixelMandala {
     // eCanvas.style.width = eCanvasWidth * 1/scale + 'px';
     // eCanvas.style.height = eCanvasHeight * 1/scale + 'px';
 
-    const ruleSeed = this.setSeed();
+    const ruleSeed = this.randomSeed();
     this.setRuleSymmetric(ruleSeed);
     this.setRandomColor();
     // ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
@@ -68,9 +69,28 @@ export class PixelMandala {
     return this.index;
   }
 
-  setSeed() {
+  randomSeed() {
     this.seed = Math.floor(Math.random() * 16777216);
     return this.seed;
+  }
+
+  public setSeed(seed: number) {
+    this.seed = seed;
+  }
+
+  getUsedColors() {
+    const colorIndex: ColorIndex[] = [];
+    this.colors.forEach((color, index) => {
+      if (this.usedColors.includes(color)) {
+        colorIndex.push({ color: color, index: index });
+      }
+    });
+    return colorIndex;
+  }
+
+  setColor(index: number, color: string) {
+    this.colors[index] = color;
+    this.render();
   }
 
   changeSeedAndReset(seed: number) {
@@ -88,7 +108,7 @@ export class PixelMandala {
   }
 
   public startWithNewRules() {
-    const ruleSeed = this.setSeed();
+    const ruleSeed = this.randomSeed();
     this.setRuleSymmetric(ruleSeed);
 
     this.setRandomColor();
@@ -436,8 +456,8 @@ export class PixelMandala {
     this.eCanvas.style.backgroundColor = color;
   }
 
-  render() {
-    const usedColors: string[] = [];
+  public render() {
+    this.usedColors = [];
     // Loop through the 2D array and set the pixel colors
     for (let y = 0; y < this.data.length; y++) {
       for (let x = 0; x < this.data[y].length; x++) {
@@ -445,9 +465,9 @@ export class PixelMandala {
         const color =
           colorIndex == 0 ? "rgba(0,0,0,0)" : this.colors[colorIndex];
 
-        if (!usedColors.includes(color)) {
+        if (!this.usedColors.includes(color)) {
           // console.log(color);
-          usedColors.push(color);
+          this.usedColors.push(color);
         }
         this.ctx.fillStyle = color;
         this.ctx.fillRect(
@@ -459,7 +479,6 @@ export class PixelMandala {
         this.ctx.fillStyle = "transparent"; // Clear the fillStyle
       }
     }
-    this.showUsedColors();
   }
 
   // --------------------------------------------------------------------------------
